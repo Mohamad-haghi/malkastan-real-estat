@@ -3,6 +3,7 @@ import { ArrowLeft } from 'lucide-react';
 import { getFeaturedProperties } from '@/data/properties';
 import { PropertyCard } from '@/components/properties/PropertyCard';
 import { Reveal } from '@/components/ui/Reveal';
+import { toPersianDigits } from '@/utils/formatPrice';
 
 export function FeaturedProperties() {
   const featured = getFeaturedProperties();
@@ -67,9 +68,9 @@ export function FeaturedProperties() {
                     {large.description}
                   </p>
                   <div className="mt-4 flex items-center gap-4 text-sm text-neutral-200">
-                    <span>{toPersianDigitsSafe(large.area)} متر</span>
+                    <span>{toPersianDigits(large.area)} متر</span>
                     <span>•</span>
-                    <span>{toPersianDigitsSafe(large.bedrooms)} خواب</span>
+                    <span>{toPersianDigits(large.bedrooms)} خواب</span>
                     <span>•</span>
                     <span className="font-bold text-white">
                       {large.transactionType === 'sale'
@@ -94,8 +95,3 @@ export function FeaturedProperties() {
   );
 }
 
-function toPersianDigitsSafe(n: number): string {
-  return String(n).replace(/\d/g, (d) =>
-    '۰۱۲۳۴۵۶۷۸۹'[parseInt(d, 10)],
-  );
-}

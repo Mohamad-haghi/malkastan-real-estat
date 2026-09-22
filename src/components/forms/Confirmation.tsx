@@ -17,10 +17,10 @@ export function Confirmation({ request, requestId, onClose }: ConfirmationProps)
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {
-    navigator.clipboard.writeText(requestId).then(() => {
+    navigator.clipboard?.writeText(requestId).then(() => {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
-    });
+    }).catch(() => {});
   };
 
   return (

@@ -23,6 +23,7 @@ export function RequestForm({ property, type, onClose }: RequestFormProps) {
   const [submitting, setSubmitting] = useState(false);
   const [success, setSuccess] = useState(false);
   const [requestId, setRequestId] = useState('');
+  const [storedRequest, setStoredRequest] = useState<PropertyRequest | null>(null);
   const [formData, setFormData] = useState({
     name: '',
     phone: '',
@@ -94,6 +95,7 @@ export function RequestForm({ property, type, onClose }: RequestFormProps) {
       }
 
       setRequestId(request.id);
+      setStoredRequest(request);
       setSubmitting(false);
       setSuccess(true);
     }, 1200);
@@ -104,25 +106,10 @@ export function RequestForm({ property, type, onClose }: RequestFormProps) {
     onClose();
   };
 
-  if (success) {
+  if (success && storedRequest) {
     return (
       <Confirmation
-        request={{
-          id: requestId,
-          type,
-          propertyId: property?.id,
-          propertyTitle: property?.title,
-          name: formData.name,
-          phone: formData.phone,
-          budget: formData.budget,
-          contactMethod: formData.contactMethod,
-          preferredTime: formData.preferredTime,
-          needType: formData.needType,
-          proposedDate: formData.proposedDate,
-          proposedTime: formData.proposedTime,
-          description: formData.description,
-          createdAt: new Date().toISOString(),
-        }}
+        request={storedRequest}
         requestId={requestId}
         onClose={handleClose}
       />
