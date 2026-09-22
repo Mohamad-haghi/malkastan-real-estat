@@ -1,9 +1,10 @@
 import { NavLink, Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Menu, X, Heart, Search, Phone, Building2 } from 'lucide-react';
 import { navItems, siteConfig } from '@/config/siteConfig';
 import { useFavorites } from '@/hooks/useFavorites';
 import { useScrollPosition } from '@/hooks/useScrollPosition';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 import { toPersianDigits } from '@/utils/formatPrice';
 
 export function Header() {
@@ -11,6 +12,7 @@ export function Header() {
   const scrolled = useScrollPosition(20);
   const { favorites } = useFavorites();
   const navigate = useNavigate();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!mobileOpen) return;
@@ -24,6 +26,8 @@ export function Header() {
       document.removeEventListener('keydown', handler);
     };
   }, [mobileOpen]);
+
+  useFocusTrap(mobileMenuRef, mobileOpen);
 
   return (
     <>
@@ -148,7 +152,7 @@ export function Header() {
             onClick={() => setMobileOpen(false)}
             onTouchMove={(e) => e.preventDefault()}
           />
-          <div className="absolute right-0 top-0 h-full w-full max-w-xs overflow-y-auto bg-white shadow-2xl animate-slide-in-right">
+          <div ref={mobileMenuRef} tabIndex={-1} className="absolute right-0 top-0 h-full w-full max-w-xs overflow-y-auto bg-white shadow-2xl animate-slide-in-right">
             <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
               <Link
                 to="/"

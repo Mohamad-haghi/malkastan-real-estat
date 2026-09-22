@@ -1,5 +1,6 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 interface DrawerProps {
   open: boolean;
@@ -10,6 +11,8 @@ interface DrawerProps {
 }
 
 export function Drawer({ open, onClose, children, title, side = 'right' }: DrawerProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -22,6 +25,8 @@ export function Drawer({ open, onClose, children, title, side = 'right' }: Drawe
       document.body.style.overflow = '';
     };
   }, [open, onClose]);
+
+  useFocusTrap(containerRef, open);
 
   if (!open) return null;
 
@@ -37,6 +42,8 @@ export function Drawer({ open, onClose, children, title, side = 'right' }: Drawe
         onClick={onClose}
       />
       <div
+        ref={containerRef}
+        tabIndex={-1}
         className={`absolute top-0 ${sideClass} h-full w-full max-w-sm overflow-y-auto bg-white shadow-2xl`}
       >
         {title && (

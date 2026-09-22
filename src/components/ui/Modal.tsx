@@ -1,5 +1,6 @@
-import { useEffect, type ReactNode } from 'react';
+import { useEffect, useRef, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 interface ModalProps {
   open: boolean;
@@ -17,6 +18,8 @@ const sizeClasses = {
 };
 
 export function Modal({ open, onClose, children, title, size = 'md' }: ModalProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const handler = (e: KeyboardEvent) => {
@@ -29,6 +32,8 @@ export function Modal({ open, onClose, children, title, size = 'md' }: ModalProp
       document.body.style.overflow = '';
     };
   }, [open, onClose]);
+
+  useFocusTrap(containerRef, open);
 
   if (!open) return null;
 
@@ -43,6 +48,8 @@ export function Modal({ open, onClose, children, title, size = 'md' }: ModalProp
         onClick={onClose}
       />
       <div
+        ref={containerRef}
+        tabIndex={-1}
         className={`relative z-10 w-full ${sizeClasses[size]} max-h-[90vh] overflow-y-auto rounded-2xl bg-white shadow-2xl animate-scale-in`}
       >
         {title && (

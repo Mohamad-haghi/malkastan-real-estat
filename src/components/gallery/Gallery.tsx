@@ -1,6 +1,7 @@
-import { useState, useCallback, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, X, Expand, ImageIcon } from 'lucide-react';
+import { useState, useCallback, useEffect, useRef } from 'react';
+import { ChevronLeft, ChevronRight, X, Expand } from 'lucide-react';
 import { toPersianDigits } from '@/utils/formatPrice';
+import { useFocusTrap } from '@/hooks/useFocusTrap';
 
 interface GalleryProps {
   images: string[];
@@ -18,6 +19,9 @@ export function Gallery({ images, title }: GalleryProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [fullscreen, setFullscreen] = useState(false);
   const [failedImages, setFailedImages] = useState<Set<number>>(new Set());
+  const fullscreenRef = useRef<HTMLDivElement>(null);
+
+  useFocusTrap(fullscreenRef, fullscreen);
 
   const markFailed = useCallback((index: number) => {
     setFailedImages((prev) => new Set(prev).add(index));
@@ -121,6 +125,8 @@ export function Gallery({ images, title }: GalleryProps) {
       {/* Fullscreen viewer */}
       {fullscreen && (
         <div
+          ref={fullscreenRef}
+          tabIndex={-1}
           className="fixed inset-0 z-[200] flex items-center justify-center bg-neutral-950/95 backdrop-blur-md"
           onClick={() => setFullscreen(false)}
           role="dialog"
