@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react';
+import { useState } from 'react';
 import { CheckCircle2, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import {

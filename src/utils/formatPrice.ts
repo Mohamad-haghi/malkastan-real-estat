@@ -69,9 +69,3 @@ export function getPropertyPriceText(property: Property): string {
 export function getPropertyLocation(property: Property): string {
   return `${property.neighborhood}، ${property.city}`;
 }
-
-export function generateRequestId(): string {
-  const year = new Date().getFullYear();
-  const random = Math.floor(10000 + Math.random() * 90000);
-  return `MK-${year}-${toPersianDigits(random)}`;
-}

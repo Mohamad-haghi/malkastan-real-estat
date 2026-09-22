@@ -126,7 +126,11 @@ export function Header() {
               {/* Mobile menu toggle */}
               <button
                 onClick={() => setMobileOpen(true)}
-                className="rounded-lg p-2 text-neutral-700 transition-colors hover:bg-neutral-100 lg:hidden"
+                className={`rounded-lg p-2 transition-colors lg:hidden ${
+                  scrolled
+                    ? 'text-neutral-700 hover:bg-neutral-100'
+                    : 'text-white hover:bg-white/10'
+                }`}
                 aria-label="منو"
               >
                 <Menu size={24} />

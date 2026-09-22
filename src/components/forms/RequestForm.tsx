@@ -3,7 +3,6 @@ import { Send, Loader2 } from 'lucide-react';
 import { Input, Select, Textarea } from '@/components/ui/Input';
 import { Button } from '@/components/ui/Button';
 import { Confirmation, generateRequestId } from '@/components/forms/Confirmation';
-import { Modal } from '@/components/ui/Modal';
 import type { Property, PropertyRequest, RequestType } from '@/types';
 import { getPropertyTypeLabel, getTransactionTypeLabel } from '@/utils/formatPrice';
 
@@ -107,28 +106,26 @@ export function RequestForm({ property, type, onClose }: RequestFormProps) {
 
   if (success) {
     return (
-      <Modal open={true} onClose={handleClose} size="md">
-        <Confirmation
-          request={{
-            id: requestId,
-            type,
-            propertyId: property?.id,
-            propertyTitle: property?.title,
-            name: formData.name,
-            phone: formData.phone,
-            budget: formData.budget,
-            contactMethod: formData.contactMethod,
-            preferredTime: formData.preferredTime,
-            needType: formData.needType,
-            proposedDate: formData.proposedDate,
-            proposedTime: formData.proposedTime,
-            description: formData.description,
-            createdAt: new Date().toISOString(),
-          }}
-          requestId={requestId}
-          onClose={handleClose}
-        />
-      </Modal>
+      <Confirmation
+        request={{
+          id: requestId,
+          type,
+          propertyId: property?.id,
+          propertyTitle: property?.title,
+          name: formData.name,
+          phone: formData.phone,
+          budget: formData.budget,
+          contactMethod: formData.contactMethod,
+          preferredTime: formData.preferredTime,
+          needType: formData.needType,
+          proposedDate: formData.proposedDate,
+          proposedTime: formData.proposedTime,
+          description: formData.description,
+          createdAt: new Date().toISOString(),
+        }}
+        requestId={requestId}
+        onClose={handleClose}
+      />
     );
   }
 

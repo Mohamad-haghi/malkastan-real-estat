@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation, Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { Header } from '@/components/layout/Header';
 import { Footer } from '@/components/layout/Footer';
@@ -17,6 +17,19 @@ function ScrollToTop() {
   return null;
 }
 
+function NotFoundPage() {
+  return (
+    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
+      <p className="text-6xl font-bold text-primary-700">۴۰۴</p>
+      <h1 className="mt-4 text-2xl font-bold text-neutral-900">صفحه پیدا نشد</h1>
+      <p className="mt-2 text-neutral-500">صفحه‌ای که دنبال آن بودید وجود ندارد.</p>
+      <Link to="/" className="btn btn-primary mt-6">
+        بازگشت به خانه
+      </Link>
+    </div>
+  );
+}
+
 function App() {
   return (
     <BrowserRouter>
@@ -31,6 +44,7 @@ function App() {
             <Route path="/compare" element={<ComparePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact" element={<ContactPage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </main>
         <Footer />
